@@ -1,0 +1,18 @@
+{
+    "id": 65,
+    "category": {
+        "id": 19,
+        "name": "institution"
+    },
+    "name": "Kim",
+    "photoUrls": [
+        "https://picsum.photos/488/968"
+    ],
+    "tags": [
+        {
+            "id": 30,
+            "name": "receive"
+        }
+    ],
+    "status": "sold"
+}
