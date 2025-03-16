@@ -1,4 +1,3 @@
-import pytest
 from validators import ResponseValidator
 
 class TestPetsAPI:
