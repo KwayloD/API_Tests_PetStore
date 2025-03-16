@@ -26,7 +26,7 @@ def pet_data(request):
     """Фикстура для генерации тестовых данных питомца"""
     filename = os.path.join(os.path.dirname(__file__), "..", "test_data", "pet_data.json")
     data = {
-        "id": 65,
+        "id": fake.random_int(min=1, max=100),
         "category": {
             "id": fake.random_int(min=1, max=100),
             "name": fake.word()
@@ -69,7 +69,7 @@ def order_data():
     """Фикстура для генерации тестовых данных заказа"""
     filename = os.path.join(os.path.dirname(__file__), "..", "test_data", "order_data.json")
     data = {
-        "id": 8,
+        "id": fake.random_int(min=1, max=100),
         "petId": fake.random_int(min=100, max=200),
         "quantity": fake.random_int(min=1, max=10),
         "shipDate": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "+0000",
@@ -92,7 +92,7 @@ def user_data():
     """Фикстура для генерации тестовых данных пользователя"""
     filename = os.path.join(os.path.dirname(__file__), "..", "test_data", "user_data.json")
     data = {
-        "id": 55,
+        "id": fake.random_int(min=1, max=100),
         "username": fake.user_name(),
         "firstName": fake.first_name(),
         "lastName": fake.last_name(),
