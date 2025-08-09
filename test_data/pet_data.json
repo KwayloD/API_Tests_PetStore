@@ -1,18 +1,18 @@
 {
-    "id": 9,
+    "id": 8,
     "category": {
-        "id": 4,
-        "name": "medical"
+        "id": 64,
+        "name": "during"
     },
-    "name": "Christopher",
+    "name": "Omar",
     "photoUrls": [
-        "https://picsum.photos/14/534"
+        "https://picsum.photos/501/256"
     ],
     "tags": [
         {
-            "id": 47,
-            "name": "visit"
+            "id": 60,
+            "name": "own"
         }
     ],
-    "status": "sold"
+    "status": "available"
 }

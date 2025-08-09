@@ -50,7 +50,7 @@ def get_id_from_pet_data(filename=os.path.join(os.path.dirname(__file__), "..", 
     """Фикстура забирает id из сгенерированных тестовых данных птомца"""
     with open(filename, 'r', encoding='utf-8') as file:
         data = json.load(file)
-        return data.get('id')
+        return data.get('id', 'category')
 
 @pytest.fixture()
 def pet_update_data():
