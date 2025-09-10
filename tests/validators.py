@@ -51,3 +51,10 @@ class ResponseValidator:
             assert isinstance(item, dict), f"Элемент {index} в '{field_name}' должен быть словарем"
             missing_keys = [key for key in required_keys if key not in item]
             assert not missing_keys, f"Элемент {index} в '{field_name}' не содержит ключи: {missing_keys}"
+
+    @staticmethod
+    def validate_invalid_json_value(response, value, excepted_value):
+        """Проверяет, что в JSON-ответе есть нужное значение и оно не соответствует ожидаемому"""
+        json_data = response.json()
+        assert value in json_data, f"Ответ не содержит {value}"
+        assert json_data[value] != excepted_value, (f"Ожидали {excepted_value}, а получили {json_data[value]}")

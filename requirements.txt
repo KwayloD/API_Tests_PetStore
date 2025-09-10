@@ -1,4 +1,5 @@
 pytest
 requests
+requests-mock
 python-dotenv
 faker

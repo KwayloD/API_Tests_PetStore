@@ -3,7 +3,7 @@ from faker import Faker
 from datetime import datetime, timezone
 import json
 import os
-from api.api_client import APIClient, APIStore
+from api.api_client import APIClient, APIStore, BASE_URL
 fake = Faker()
 
 @pytest.fixture
@@ -111,3 +111,55 @@ def get_username_from_user_data(filename=os.path.join(os.path.dirname(__file__),
     with open(filename, 'r', encoding='utf-8') as file:
         data = json.load(file)
         return data.get('username')
+
+@pytest.fixture
+def get_mock_inventory(requests_mock):
+    """Мок: генерация фальшивого инвентаря"""
+    data = {
+        "available": fake.random_int(min=1, max=100),
+        "pending": fake.random_int(min=100, max=100),
+        "sold": fake.random_int(min=1, max=100),
+        "result": "Все четко!"
+    }
+    requests_mock.get(f"{BASE_URL}/store/inventory", json=data, status_code=200)
+    return data
+
+@pytest.fixture()
+def mock_order_data(requests_mock):
+    """Мок: генерация фальшивых тестовых данных заказа"""
+    data = {
+        "id": "unknown",
+        "petId": "unknown",
+        "quantity": "unknown",
+        "shipDate": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "+0000",
+        "status": fake.random_element(elements=("placed", "shipped", "delivered")),
+        "complete": fake.boolean()
+    }
+    requests_mock.post(f"{BASE_URL}/store/order", json=data, status_code=201)
+    return data
+
+@pytest.fixture()
+def mock_order_with_wrong_id(requests_mock):
+    """Мок: запрашиваем один order_id, а в ответе другой"""
+    requested_id = 199   # то, что передадим в метод
+    data = {
+        "id": 99,       # специально другой ID
+        "petId": 555,
+        "quantity": 3,
+        "status": "placed",
+        "complete": True
+    }
+    requests_mock.get(f"{BASE_URL}/store/order/{requested_id}", json=data, status_code=400)
+    return requested_id, data
+
+@pytest.fixture()
+def mock_delete_order(requests_mock):
+    """Мок: удаляем заказ с одним order_id, а в ответе другой order_id"""
+    requested_id = 99   # то, что передадим в метод
+    data = {
+        "code": 123,
+        "type": "deleted",
+        "message": "23"
+    }
+    requests_mock.delete(f"{BASE_URL}/store/order/{requested_id}", json=data, status_code=400)
+    return requested_id, data
